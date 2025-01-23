@@ -27,11 +27,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             log.error("User not found for email: {}", email);
             throw new UsernameNotFoundException("User not found");
         }
+        if (user.getAccessLevel() == null) {
+            throw new IllegalStateException("AccessLevel is null for user: " + email);
+        }
 
         return new UserDetailsImpl(
                 user.getId(),
                 user.getEmail(),
-                user.getPassword()
+                user.getPassword(),
+                user.getAccessLevel()
         );
     }
 }

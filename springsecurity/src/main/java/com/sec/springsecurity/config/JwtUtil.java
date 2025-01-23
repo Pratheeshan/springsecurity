@@ -12,6 +12,8 @@ import org.springframework.util.StringUtils;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JwtUtil {
@@ -27,9 +29,13 @@ public class JwtUtil {
     //Extracts the username from the authenticated user,
     public String generate(Authentication authentication) {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", userDetails.getAccessLevel().name());
+
 
         return Jwts
                 .builder() //Builds a JWT with
+                .setClaims(claims)
                 .setSubject(userDetails.getUsername()) //Subject: The username.
                 .setIssuedAt(new Date()) //The current time.
                 .setExpiration(new Date(new Date().getTime() + expiration))

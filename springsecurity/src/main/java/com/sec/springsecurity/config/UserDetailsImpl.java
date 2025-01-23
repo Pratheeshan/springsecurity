@@ -1,26 +1,32 @@
 package com.sec.springsecurity.config;
 
+import com.sec.springsecurity.enums.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class UserDetailsImpl implements UserDetails {
     private String id;
     private String username;
     private String password;
+    private AccessLevel accessLevel;
 
-    public UserDetailsImpl(String id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + accessLevel.name()));
     }
 
     public String getId() {
@@ -56,4 +62,5 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

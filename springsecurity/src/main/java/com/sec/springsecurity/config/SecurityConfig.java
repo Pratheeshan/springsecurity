@@ -27,6 +27,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable()) // Disable CSRF protection
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests.requestMatchers("/api/v1/auth/*").permitAll()//Endpoints starting with /api/v1/auth/* are publicly accessible.
+                                .requestMatchers("/api/v1/staff/**").hasRole("ADMIN")
                                 .anyRequest().authenticated())//All other requests require the user to be authenticated.
                 //Ensures the JWT-based authentication process happens before username/password-based authentication.
                 .addFilterBefore(new AuthenticationFilter(jwtUtil, userDetailsServiceImpl), UsernamePasswordAuthenticationFilter.class);

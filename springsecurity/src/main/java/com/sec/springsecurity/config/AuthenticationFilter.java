@@ -21,7 +21,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     private static final Logger log = LoggerFactory.getLogger(AuthenticationFilter.class);
 
     private final JwtUtil jwtUtil; //responsible for parsing validating and extracting info from JWT
-    private final UserDetailsServiceImpl userDetailsService; //loading userdetail based on the extracted username
+    private final UserDetailsServiceImpl userDetailsService; //loading user detail based on the extracted username
 
     @Autowired
     public AuthenticationFilter(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService) {
