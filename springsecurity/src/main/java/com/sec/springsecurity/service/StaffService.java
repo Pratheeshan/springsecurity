@@ -61,11 +61,13 @@ public class StaffService {
 
     public ApiResponse<List<Staff>> getAllStaff() {
         List<Staff> staffList = staffRepository.findAll();
+        System.out.println("Staff retrieved: " + staffList);
         if (staffList.isEmpty()) {
             return new ApiResponse<>(true, "No staff records found", Collections.emptyList());
         }
         return new ApiResponse<>(true, "Staff records retrieved successfully", staffList);
     }
+
 
     public ApiResponse<Staff> getStaffById(String id) {
         Optional<Staff> staff = staffRepository.findById(id);

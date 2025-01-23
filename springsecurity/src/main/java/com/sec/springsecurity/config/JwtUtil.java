@@ -30,7 +30,7 @@ public class JwtUtil {
     public String generate(Authentication authentication) {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", userDetails.getAccessLevel().name());
+        claims.put("role", "ROLE_"+userDetails.getAccessLevel().name());
 
 
         return Jwts

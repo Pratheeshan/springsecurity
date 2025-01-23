@@ -1,5 +1,6 @@
 package com.sec.springsecurity.controller;
 
+import com.mongodb.client.model.ReturnDocument;
 import com.sec.springsecurity.model.Staff;
 import com.sec.springsecurity.model.substaff.ApiResponse;
 import com.sec.springsecurity.service.StaffService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -40,9 +42,13 @@ public class StaffController {
     }
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/all")
-    public ResponseEntity<ApiResponse<List<Staff>>> getAllStaff() {
+    public ResponseEntity<ApiResponse<List<Staff>>> getAllStaff(Authentication authentication) {
+        System.out.println("Current user roles: " + authentication.getAuthorities());
+
         ApiResponse<List<Staff>> response = staffService.getAllStaff();
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        System.out.println("Staff records: " + response);
+        //return null;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
