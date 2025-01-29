@@ -3,7 +3,9 @@ package com.sec.springsecurity.service.impl;
 import com.sec.springsecurity.config.JwtUtil;
 import com.sec.springsecurity.repository.UserRepository;
 import com.sec.springsecurity.request.LoginRequest;
+import com.sec.springsecurity.request.OtpRequest;
 import com.sec.springsecurity.request.RegisterRequest;
+import com.sec.springsecurity.request.VerifyOtpRequest;
 import com.sec.springsecurity.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -56,4 +58,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return "";
         }
     }
+
+    @Override
+    public String sendOtp(OtpRequest otpRequest) {
+        return "";
+    }
+
+    @Override
+    public String verifyOtp(VerifyOtpRequest verifyOtpRequest) {
+        return "";
+    }
+
+
 }
