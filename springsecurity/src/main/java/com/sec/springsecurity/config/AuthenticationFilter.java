@@ -36,9 +36,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                                     @NotNull FilterChain filterChain
     ) throws ServletException, IOException {
         try {
-            String jwt = jwtUtil.parse(httpServletRequest); // Parse JWT from request
-            if (jwt != null && jwtUtil.validate(jwt)) { // Validate the token
-                String username = jwtUtil.getUsername(jwt);// Extract username
+            String jwt = jwtUtil.parse(httpServletRequest); // Parse JWT from request //<token>
+            if (jwt != null && jwtUtil.validate(jwt)) { // Validate the token //true && false
+                String username = jwtUtil.getUsername(jwt);// Extract username //testuser@gmail.com
 
                 // Load user details and create an authentication object
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);

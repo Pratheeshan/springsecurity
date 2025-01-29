@@ -20,7 +20,8 @@ public class JwtUtil {
     private static final Logger log = LoggerFactory.getLogger(JwtUtil.class);
 
     //symmetric key generated using the HS256 (HMAC-SHA256) algorithm
-    private static final SecretKey secret = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    @Value("${app.jwt.secret}")
+    private String secret;
 
     //field holds the token's validity duration in milliseconds.
     @Value("${app.jwt.expiration}")
@@ -39,7 +40,7 @@ public class JwtUtil {
                 .setSubject(userDetails.getUsername()) //Subject: The username.
                 .setIssuedAt(new Date()) //The current time.
                 .setExpiration(new Date(new Date().getTime() + expiration))
-                .signWith(secret, SignatureAlgorithm.HS256) //Signed with the secret key.
+                .signWith(SignatureAlgorithm.HS256, secret) //Signed with the secret key.
                 .compact(); //A signed JWT string.
     }
 
@@ -55,10 +56,10 @@ public class JwtUtil {
 
     //Extracts the JWT from the Authorization header of the request.
     public String parse(HttpServletRequest request) {
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader("Authorization"); //Bearer <token>
 
         if (StringUtils.hasText(authorization) && authorization.startsWith("Bearer ")) {//JWT Token if it starts with "Bearer "; otherwise, null.
-            return authorization.substring(7);
+            return authorization.substring(7); //<toekn>
         }
 
         return null;

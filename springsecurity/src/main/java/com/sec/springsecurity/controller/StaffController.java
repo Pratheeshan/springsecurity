@@ -1,6 +1,5 @@
 package com.sec.springsecurity.controller;
 
-import com.mongodb.client.model.ReturnDocument;
 import com.sec.springsecurity.model.Staff;
 import com.sec.springsecurity.model.substaff.ApiResponse;
 import com.sec.springsecurity.service.StaffService;
@@ -26,7 +25,6 @@ public class StaffController {
 
 
     @PostMapping("/")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<String>> saveStaff(@Valid @RequestBody Staff staff, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = bindingResult.getFieldErrors().stream()
@@ -40,7 +38,7 @@ public class StaffController {
         ApiResponse<String> response = staffService.saveStaff(staff);
         return new ResponseEntity<>(response, response.isSuccess() ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<Staff>>> getAllStaff(Authentication authentication) {
         System.out.println("Current user roles: " + authentication.getAuthorities());
@@ -48,10 +46,9 @@ public class StaffController {
         ApiResponse<List<Staff>> response = staffService.getAllStaff();
         System.out.println("Staff records: " + response);
         //return null;
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(response , HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Staff>> getStaffById(@PathVariable String id) {
         ApiResponse<Staff> response = staffService.getStaffById(id);
