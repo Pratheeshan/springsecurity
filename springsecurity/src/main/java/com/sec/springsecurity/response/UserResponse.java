@@ -1,8 +1,13 @@
 package com.sec.springsecurity.response;
 
+import com.sec.springsecurity.enums.AccessLevel;
+import lombok.Data;
+
+@Data
 public class UserResponse {
     private String id;
     private String firstName;
+    private String whatsappNumber;
 
     public UserResponse() {
     }
@@ -12,19 +17,7 @@ public class UserResponse {
         this.firstName = firstName;
     }
 
-    public String getId() {
-        return id;
+    public UserResponse(String id, AccessLevel accessLevel, String whatsappNumber) {
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
 }

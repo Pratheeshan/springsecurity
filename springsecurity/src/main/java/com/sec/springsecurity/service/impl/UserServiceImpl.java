@@ -6,6 +6,9 @@ import com.sec.springsecurity.response.UserResponse;
 import com.sec.springsecurity.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
 //business logic related to user management
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,5 +24,11 @@ public class UserServiceImpl implements UserService {
                 user.getFirstName()
                 //Returns a UserResponse object with specific user information
         );
+    }
+
+    @Override
+    public UserResponse getUserByPhoneNumber(String whatsappNumber) {
+        Optional<User> user = userRepository.findByWhatsappNumber(whatsappNumber);
+        return new UserResponse();
     }
 }

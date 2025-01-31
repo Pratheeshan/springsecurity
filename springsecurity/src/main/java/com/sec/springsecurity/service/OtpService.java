@@ -18,31 +18,35 @@ public class OtpService {
         Random random = new Random();
         StringBuilder otp = new StringBuilder();
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 6; i++) {
             otp.append(numbers.charAt(random.nextInt(numbers.length())));
         }
 
         return otp.toString(); // Return OTP as String
     }
 
-    public void storeOtp(String personalPhone) {
-        String otp = new String(generateOtp()); // Generate OTP
-        otpStorage.put(personalPhone, otp); // Store OTP
-        System.out.println("Data type: "+otp.getClass().getSimpleName());
-        System.out.println("Stored OTP for " + personalPhone + " is: " + otp);
+    public void storeOtp(String whatsappNumber) {
+        if (otpStorage.containsKey(whatsappNumber)) {
+            System.out.println("OTP already exists for this number. Please wait.");
+            return; // Prevent overwriting OTP if it's still valid
+        }
+        String otp = generateOtp(); // Generate OTP
+        otpStorage.put(whatsappNumber, otp); // Store OTP
+        //System.out.println("Data type: "+otp.getClass().getSimpleName());
+        System.out.println("Stored OTP for " + whatsappNumber + " is: " + otp);
     }
 
 
-    public boolean validateOtp(String personalPhone, String enteredOtp) {
-        if (!otpStorage.containsKey(personalPhone)) {
+    public boolean validateOtp(String whatsappNumber, String enteredOtp) {
+        if (!otpStorage.containsKey(whatsappNumber)) {
             return false; // OTP not found
         }
 
-        String storedOtp = otpStorage.get(personalPhone);
+        String storedOtp = otpStorage.get(whatsappNumber);
         boolean isValid = storedOtp.equals(enteredOtp);
 
         if (isValid) {
-            otpStorage.remove(personalPhone); // Remove OTP after successful validation
+            otpStorage.remove(whatsappNumber); // Remove OTP after successful validation
         }
 
         return isValid;

@@ -27,6 +27,8 @@ public class User {
 
     private AccessLevel accessLevel;
 
+    private String whatsappNumber;
+
     public List<GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + accessLevel.name()));
     }
@@ -40,4 +42,11 @@ public class User {
         this.password = password;
     }
 
+    public User(String firstName, String email, String password, AccessLevel accessLevel, String whatsappNumber) {
+        this.firstName = firstName;
+        this.email = email;
+        this.password = password;
+        this.accessLevel = accessLevel;
+        this.whatsappNumber = whatsappNumber;
+    }
 }

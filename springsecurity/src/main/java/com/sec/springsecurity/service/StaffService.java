@@ -44,6 +44,7 @@ public class StaffService {
             user.setEmail(staff.getPersonalEmail());
             user.setFirstName(staff.getFirstName());
             user.setAccessLevel(staff.getAccessLevel());
+            user.setWhatsappNumber(staff.getWhatsappNumber());
             user.setPassword(encodedPassword);
 
             userRepository.save(user);

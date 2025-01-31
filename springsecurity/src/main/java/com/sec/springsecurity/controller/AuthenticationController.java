@@ -39,33 +39,16 @@ public class AuthenticationController {
         return authenticationService.login(loginRequest);
     }
 
-//    @PostMapping("send-otp")
-//    public String sendOtp(@RequestBody OtpRequest otpRequest){
-//        return authenticationService.sendOtp(otpRequest);
-//    }
-//    @GetMapping("verify-otp")
-//    public String verifyOtp(@RequestBody VerifyOtpRequest verifyOtpRequest){
-//        return authenticationService.verifyOtp(verifyOtpRequest);
-//    }
-
+    // Send OTP
     @PostMapping("/send-otp")
-    public ResponseEntity<String> sendOtp(@RequestBody OtpRequest otpRequest) {  //0767202075
-        // 2. Generate and store OTP for this phone number
-        otpService.storeOtp(otpRequest.getPersonalPhone());
-        // 3. Return success message
-        return ResponseEntity.ok("OTP sent successfully to " + otpRequest.getPersonalPhone());
+    public ResponseEntity<String> sendOtp(@RequestBody OtpRequest otpRequest) {
+        return ResponseEntity.ok(authenticationService.sendOtp(otpRequest));
     }
 
+    // Verify OTP and login
     @PostMapping("/verify-otp")
     public ResponseEntity<String> verifyOtp(@RequestBody VerifyOtpRequest verifyOtpRequest) {
-        //Validate OTP
-        boolean isValid = otpService.validateOtp(verifyOtpRequest.getPersonalPhone(), verifyOtpRequest.getOtpNumber());
-        //  If OTP is valid, return success response
-        if (isValid) {
-            return ResponseEntity.ok("OTP Verified Successfully!");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP!");
-        }
+        return ResponseEntity.ok(authenticationService.verifyOtp(verifyOtpRequest));
     }
 
 

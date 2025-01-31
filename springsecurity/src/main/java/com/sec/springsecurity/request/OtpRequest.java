@@ -9,6 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 public class OtpRequest {
 
-    private String personalPhone;
+    private String whatsappNumber;
 
+    public String getWhatsappNumber() {
+        return whatsappNumber;
+    }
+
+    public void setWhatsappNumber(String whatsappNumber) {
+        this.whatsappNumber = whatsappNumber;
+    }
 }
